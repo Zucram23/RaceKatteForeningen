@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Add a New Cat</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f9f9f9;
+      padding: 40px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #2c3e50;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 16px;
+      color: #34495e;
+      margin-bottom: 5px;
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .form-group button {
+      background-color: #3498db;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      width: 100%;
+    }
+
+    .form-group button:hover {
+      background-color: #2980b9;
+    }
+
+    .form-group a {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      color: #3498db;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .form-group a:hover {
+      text-decoration: underline;
+    }
+
+    .add-race-form {
+      display: none;
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #f3f3f3;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .add-race-form h3 {
+      color: #2c3e50;
+    }
+
+    .add-race-form input {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Add a New Cat</h1>
+  <form th:action="@{/RaceKatteKlubben/profile/{id}/add-cat(id=${user.id})}" method="post">
+    <div class="form-group">
+      <label for="name">Cat Name</label>
+      <input type="text" id="name" name="name" required />
+    </div>
+
+    <div class="form-group">
+      <label for="age">Age</label>
+      <input type="number" id="age" name="age" required />
+    </div>
+
+    <div class="form-group">
+      <label for="race">Race</label>
+      <select id="race" name="race_id"required>
+        <option th:each="race : ${races}" th:value="${race.id}" th:text="${race.name}"></option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <a href="#" id="add-race-link">Add a New Race</a>
+    </div>
+
+    <div class="form-group">
+      <button type="submit">Add Cat</button>
+    </div>
+  </form>
+
+  <!-- Add new race form -->
+  <div class="add-race-form" id="add-race-form">
+    <h3>Add a New Race</h3>
+    <form th:action="@{/RaceKatteKlubben/profile/{id}/add-race(id=${user.id})}" method="post">
+      <div class="form-group">
+        <label for="raceName">Race Name</label>
+        <input type="text" id="raceName" name="raceName" required />
+      </div>
+      <div class="form-group">
+        <button type="submit">Add Race</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("add-race-link").addEventListener("click", function(event) {
+      event.preventDefault();
+      document.getElementById("add-race-form").style.display = "block";
+    });
+  </script>
+</div>
+</body>
+</html>
